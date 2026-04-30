@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply min-h-screen bg-slate-950 text-slate-100 antialiased;
+  background-image:
+    radial-gradient(circle at top, rgba(124, 58, 237, 0.28), transparent 30%),
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.18), transparent 24%),
+    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  @apply text-violet-300 underline-offset-4 transition hover:text-violet-200;
+}
