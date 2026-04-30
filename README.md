@@ -1,5 +1,7 @@
 # 造梦工厂 (Dream Factory)
 
+🌐 **产品演示官网**：[https://zaomeng.91wink.com/](https://zaomeng.91wink.com/)
+
 造梦工厂是一个基于 Next.js 开发的 AI 多模态视频生成平台，专注于将创意转化为高质量的视频内容。全面接入火山引擎（Volcengine）的大模型能力，实现从文案分镜到图像生成，再到视频渲染的全链路自动化。
 
 ## 核心功能

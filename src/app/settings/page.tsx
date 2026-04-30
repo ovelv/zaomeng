@@ -1,7 +1,7 @@
 import { SettingsClient } from "@/components/settings-client";
 
 export const metadata = {
-  title: "系统设置 - 造梦工厂",
+  title: "系统设置",
 };
 
 export default function SettingsPage() {
