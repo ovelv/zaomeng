@@ -107,8 +107,8 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body>
-        <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
+      <body className="flex flex-col min-h-screen">
+        <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 shrink-0">
           <nav className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-4 md:px-8">
             <Link href="/" className="group flex items-center gap-2 font-semibold tracking-wide text-white hover:text-violet-300 transition">
               <LogoIcon className="w-6 h-6 transition-transform group-hover:scale-110" />
@@ -123,7 +123,45 @@ export default function RootLayout({
             </div>
           </nav>
         </header>
-        {children}
+        <main className="flex-1 flex flex-col">
+          {children}
+        </main>
+        {/* Footer */}
+        <footer className="border-t border-white/10 py-12 text-center bg-slate-950 shrink-0 mt-auto">
+          <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2 text-white/80">
+                <LogoIcon className="w-5 h-5 opacity-80" />
+                <span className="font-semibold tracking-wide text-lg">造梦工厂</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-slate-400 mt-1">
+                <span>作者：欧维Ove</span>
+                <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                <span>微信：Ovelv2023</span>
+              </div>
+            </div>
+
+            {/* 致敬栏 */}
+            <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-slate-400">
+              <span className="text-slate-300 font-medium">致敬：</span>
+              <a href="https://linux.do/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">Linux.do</a>
+              <span className="text-slate-600">|</span>
+              <a href="https://91wink.com" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">独立开发前线</a>
+              <span className="text-slate-600">|</span>
+              <a href="https://v2ex.com" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">V2ex</a>
+              <span className="text-slate-600">|</span>
+              <a href="https://www.ruanyifeng.com/blog/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">阮一峰</a>
+              <span className="text-slate-600">|</span>
+              <a href="https://w2solo.com/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">W2solo</a>
+              <span className="text-slate-600">|</span>
+              <a href="https://www.volcengine.com/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-300 transition no-underline">火山引擎</a>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              &copy; {new Date().getFullYear()} 造梦工厂. Powered by 火山引擎 Volcengine Ark.
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );

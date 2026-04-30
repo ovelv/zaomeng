@@ -315,26 +315,6 @@ export function LandingPage() {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-12 text-center bg-slate-950">
-        <div className="flex flex-col items-center justify-center gap-6">
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-white/80">
-              <LogoIcon className="w-5 h-5 opacity-80" />
-              <span className="font-semibold tracking-wide text-lg">造梦工厂</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-slate-400 mt-1">
-              <span>作者：欧维Ove</span>
-              <span className="w-1 h-1 rounded-full bg-slate-600"></span>
-              <span>微信：Ovelv2023</span>
-            </div>
-          </div>
-          <p className="text-xs text-slate-500">
-            &copy; {new Date().getFullYear()} 造梦工厂. Powered by 火山引擎 Volcengine Ark.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
