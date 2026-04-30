@@ -7,6 +7,7 @@ export type CustomJob = {
   id: string;
   prompt: string;
   firstFrameUrl?: string;
+  referenceImageUrl?: string;
   assetId?: string;
   ratio: string;
   resolution: string;
@@ -17,9 +18,9 @@ export type CustomJob = {
   remoteTaskId?: string;
   videoUrl?: string;
   error?: string;
+  settings: Settings;
   createdAt: string;
   updatedAt: string;
-  settings: Settings;
 };
 
 const globalForCustom = globalThis as typeof globalThis & {
@@ -75,6 +76,7 @@ async function runCustomJob(id: string) {
       watermark: job.watermark,
       returnLastFrame: false,
       firstFrameUrl: job.firstFrameUrl,
+      referenceImageUrl: job.referenceImageUrl,
       assetId: job.assetId,
       apiKey: job.settings.arkApiKey,
       baseUrl: job.settings.arkBaseUrl,

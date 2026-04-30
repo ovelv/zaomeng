@@ -101,6 +101,15 @@ export function LandingPage() {
                   体验萌宠故事
                   <Wand2 className="h-4 w-4 text-violet-300 transition-transform group-hover:rotate-12" />
                 </Link>
+                <a
+                  href="https://github.com/ovelv/zaomeng"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-white/5 hover:border-white/40 shadow-lg"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  GitHub 开源
+                </a>
                 <Link
                   href="/custom"
                   className="group inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-medium text-slate-300 transition-all hover:text-white hover:bg-white/5"
@@ -161,6 +170,28 @@ export function LandingPage() {
               {SHOWCASE_VIDEOS.map((src, idx) => (
                 <VideoCard key={idx} src={src} />
               ))}
+            </div>
+            
+            <div className="mt-16 mx-auto max-w-3xl text-center">
+              <a 
+                href="https://csnd.cn/" 
+                target="_blank" 
+                rel="noreferrer"
+                className="group relative inline-flex items-center justify-between gap-4 overflow-hidden rounded-2xl border border-rose-500/30 bg-gradient-to-r from-rose-500/10 to-orange-500/10 px-6 py-5 sm:px-8 sm:py-6 text-left transition-all hover:border-rose-400/50 hover:bg-rose-500/20 hover:scale-[1.02] shadow-[0_0_30px_rgba(244,63,94,0.15)] w-full"
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] bg-[position:200%_0,0_0] bg-no-repeat transition-[background-position_0s_ease] group-hover:bg-[position:-200%_0,0_0] group-hover:duration-[1500ms]"></div>
+                <div>
+                  <div className="text-rose-400 text-xs font-bold tracking-wider uppercase mb-1 flex items-center gap-2">
+                    <Sparkles className="w-3 h-3" />
+                    强烈推荐
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-rose-100 transition-colors">爆单片场</h3>
+                  <p className="text-sm text-slate-300">上传商品图，1 分钟生成爆款真人带货短视频，助力电商销量飙升！</p>
+                </div>
+                <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-500/20 text-rose-300 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                  <ArrowRight className="h-5 w-5" />
+                </div>
+              </a>
             </div>
           </div>
         </section>
@@ -287,12 +318,19 @@ export function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 py-12 text-center bg-slate-950">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-2 text-white/80">
-            <LogoIcon className="w-5 h-5 opacity-80" />
-            <span className="font-semibold tracking-wide">造梦工厂</span>
+        <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2 text-white/80">
+              <LogoIcon className="w-5 h-5 opacity-80" />
+              <span className="font-semibold tracking-wide text-lg">造梦工厂</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-slate-400 mt-1">
+              <span>作者：欧维Ove</span>
+              <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+              <span>微信：Ovelv2023</span>
+            </div>
           </div>
-          <p className="text-sm text-slate-500">
+          <p className="text-xs text-slate-500">
             &copy; {new Date().getFullYear()} 造梦工厂. Powered by 火山引擎 Volcengine Ark.
           </p>
         </div>

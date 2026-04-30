@@ -24,7 +24,7 @@ const DEMO_TEXT = `大家好，今天想跟你们聊一个很多人正在忽略�
 export function HomeClient() {
   const [text, setText] = useState(DEMO_TEXT);
   const [title, setTitle] = useState("连续口播示例");
-  const [assetId, setAssetId] = useState("");
+  const [assetId, setAssetId] = useState("asset-20260401123823-6d4x2");
   const [personaTemplate, setPersonaTemplate] = useState(DEFAULT_PERSONA_TEMPLATE);
   const [cameraTemplate, setCameraTemplate] = useState(DEFAULT_CAMERA_TEMPLATE);
   const [segments, setSegments] = useState<SegmentDraft[]>([]);
@@ -441,17 +441,29 @@ export function HomeClient() {
                   先点击“先切分文案”，这里会出现可编辑的片段脚本。
                 </div>
               ) : (
-                segments.map((segment) => (
-                  <div
-                    key={segment.id}
-                    className="rounded-2xl border border-white/10 bg-slate-950/70 p-4"
-                  >
-                    <div className="mb-3 flex items-center justify-between text-xs text-slate-400">
-                      <span>第 {segment.index} 段</span>
-                      <span>
-                        {segment.charCount} 字 / 预估 {segment.estimatedDurationSec} 秒 / 生成 {segment.targetDurationSec} 秒
-                      </span>
-                    </div>
+                <>
+                  {segments.map((segment, idx) => (
+                    <div
+                      key={segment.id}
+                      className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 relative"
+                    >
+                      <button
+                        onClick={() => {
+                          const newSegments = segments.filter((_, i) => i !== idx);
+                          // Re-number remaining segments
+                          setSegments(newSegments.map((s, i) => ({ ...s, index: i + 1 })));
+                        }}
+                        className="absolute right-4 top-4 text-xs text-rose-400 hover:text-rose-300 transition"
+                        title="删除此分段"
+                      >
+                        删除
+                      </button>
+                      <div className="mb-3 flex items-center justify-between text-xs text-slate-400">
+                        <span>第 {segment.index} 段</span>
+                        <span className="mr-8">
+                          {segment.charCount} 字 / 预估 {segment.estimatedDurationSec} 秒 / 生成 {segment.targetDurationSec} 秒
+                        </span>
+                      </div>
                     <div className="mb-3 grid gap-2 md:grid-cols-[1fr_120px] md:items-end">
                       <div className="text-xs text-slate-400">
                         可为每一段单独设置生成秒数，实际调用以这里的数值为准。
@@ -479,7 +491,24 @@ export function HomeClient() {
                       className="min-h-[110px] w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm leading-7 text-white outline-none transition focus:border-violet-400"
                     />
                   </div>
-                ))
+                ))}
+                  <button
+                    onClick={() => {
+                      const newSegment = {
+                        id: crypto.randomUUID(),
+                        index: segments.length + 1,
+                        text: "",
+                        charCount: 0,
+                        estimatedDurationSec: 5,
+                        targetDurationSec: 5,
+                      };
+                      setSegments([...segments, newSegment]);
+                    }}
+                    className="w-full rounded-2xl border border-dashed border-white/20 bg-transparent px-4 py-3 text-sm text-slate-300 transition hover:border-violet-400 hover:text-violet-300"
+                  >
+                    + 添加新分段
+                  </button>
+                </>
               )}
             </div>
           </section>
@@ -564,11 +593,18 @@ export function HomeClient() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <div className="mt-4 flex flex-wrap gap-4 text-sm items-center">
                   {segment.videoUrl ? (
-                    <a href={segment.videoUrl} target="_blank" rel="noreferrer" className="text-violet-400 hover:underline">
-                      查看视频
-                    </a>
+                    <div className="flex flex-col gap-2 w-full mt-2">
+                      <video 
+                        src={segment.videoUrl} 
+                        controls 
+                        className="w-full max-w-[280px] rounded-lg object-cover bg-black/20"
+                      />
+                      <a href={segment.videoUrl} target="_blank" rel="noreferrer" className="text-violet-400 hover:underline">
+                        在新标签页打开视频
+                      </a>
+                    </div>
                   ) : null}
                   {(segment.status === "failed" || segment.status === "succeeded") && (
                     <button

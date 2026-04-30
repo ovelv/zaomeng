@@ -2,7 +2,6 @@ export type Settings = {
   arkApiKey: string;
   arkBaseUrl: string;
   seedanceModel: string;
-  geminiApiKey: string;
   seedreamModel: string;
   storyboardModel: string;
 };
@@ -11,7 +10,6 @@ const DEFAULT_SETTINGS: Settings = {
   arkApiKey: "",
   arkBaseUrl: "https://ark.cn-beijing.volces.com/api/v3",
   seedanceModel: "",
-  geminiApiKey: "",
   seedreamModel: "",
   storyboardModel: "",
 };

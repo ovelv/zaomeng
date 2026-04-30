@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
   const job = createCustomJob({
     prompt: body.prompt,
     firstFrameUrl: body.firstFrameUrl?.trim() || undefined,
+    referenceImageUrl: body.referenceImageUrl?.trim() || undefined,
     assetId: body.assetId?.trim() || undefined,
     ratio: body.ratio || "9:16",
     resolution: body.resolution || "720p",

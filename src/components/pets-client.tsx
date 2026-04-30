@@ -88,10 +88,10 @@ export function PetsClient() {
     setScenes([]);
     try {
       const settings = getSettings();
-      const response = await fetch("/api/gemini/storyboard", {
+      const response = await fetch("/api/storyboard", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ theme, arkApiKey: settings.arkApiKey }),
+        body: JSON.stringify({ theme, settings }),
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "生成脚本失败");
@@ -114,7 +114,7 @@ export function PetsClient() {
         globalCharacter,
         referenceImageUrl: referenceImageUrl.trim() || undefined,
         scenes,
-        arkApiKey: settings.arkApiKey,
+        settings,
       };
 
       const response = await fetch("/api/pets-jobs", {
@@ -150,7 +150,7 @@ export function PetsClient() {
           多镜头叙事与一致性角色
         </h1>
         <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base max-w-3xl">
-          通过 Gemini 自动生成分镜脚本，结合火山引擎文生图/图生视频能力，
+          通过大模型自动生成分镜脚本，结合火山引擎文生图/图生视频能力，
           实现固定角色穿搭、多镜头视角的连续萌宠短视频。
         </p>
       </section>
@@ -162,19 +162,19 @@ export function PetsClient() {
             <div className="mt-6 grid gap-4">
               <label className="grid gap-2 text-sm text-slate-300">
                 内容主题
-                <input
+                <textarea
                   value={theme}
                   onChange={(e) => setTheme(e.target.value)}
-                  className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
+                  className="min-h-[100px] rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
                   placeholder="输入故事主题"
                 />
               </label>
               <label className="grid gap-2 text-sm text-slate-300">
                 全局角色设定 (确保一致性)
-                <input
+                <textarea
                   value={globalCharacter}
                   onChange={(e) => setGlobalCharacter(e.target.value)}
-                  className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
+                  className="min-h-[100px] rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
                   placeholder="例如：一只戴着红围巾的金毛犬"
                 />
               </label>
@@ -187,6 +187,22 @@ export function PetsClient() {
                   placeholder="https://... 或 asset://..."
                 />
               </label>
+
+              <button
+                onClick={() => {
+                  const newScene: Partial<StoryboardScene> = {
+                    scene: scenes.length + 1,
+                    description: "",
+                    camera: "推镜头，高质量",
+                    subtitle: "",
+                    duration: 5,
+                  };
+                  setScenes([...scenes, newScene]);
+                }}
+                className="mt-4 w-full rounded-xl border border-dashed border-white/20 bg-transparent px-4 py-3 text-sm text-slate-300 transition hover:border-violet-400 hover:text-violet-300"
+              >
+                + 添加新分镜
+              </button>
 
               <button
                 onClick={handleGenerateScript}
@@ -206,7 +222,20 @@ export function PetsClient() {
               <div className="mt-4 space-y-4 max-h-[600px] overflow-y-auto pr-2">
                 {scenes.map((scene, idx) => (
                   <div key={idx} className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
-                    <div className="text-sm font-medium text-violet-300 mb-2">分镜 {scene.scene}</div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-sm font-medium text-violet-300">分镜 {scene.scene}</div>
+                      <button
+                        onClick={() => {
+                          const newScenes = scenes.filter((_, i) => i !== idx);
+                          // Re-number remaining scenes
+                          setScenes(newScenes.map((s, i) => ({ ...s, scene: i + 1 })));
+                        }}
+                        className="text-xs text-rose-400 hover:text-rose-300 transition"
+                        title="删除此分镜"
+                      >
+                        删除
+                      </button>
+                    </div>
                     <label className="grid gap-1 text-xs text-slate-400 mb-2">
                       画面描述 (生图提示词)
                       <textarea

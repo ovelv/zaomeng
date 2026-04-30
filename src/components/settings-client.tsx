@@ -9,7 +9,6 @@ export function SettingsClient() {
   const [seedanceModel, setSeedanceModel] = useState("");
   const [seedreamModel, setSeedreamModel] = useState("");
   const [storyboardModel, setStoryboardModel] = useState("");
-  const [geminiApiKey, setGeminiApiKey] = useState("");
   const [savedMessage, setSavedMessage] = useState("");
 
   useEffect(() => {
@@ -19,7 +18,6 @@ export function SettingsClient() {
     setSeedanceModel(settings.seedanceModel);
     setSeedreamModel(settings.seedreamModel);
     setStoryboardModel(settings.storyboardModel);
-    setGeminiApiKey(settings.geminiApiKey);
   }, []);
 
   function handleSave() {
@@ -29,7 +27,6 @@ export function SettingsClient() {
       seedanceModel,
       seedreamModel,
       storyboardModel,
-      geminiApiKey,
     });
     setSavedMessage("保存成功！");
     setTimeout(() => setSavedMessage(""), 3000);
@@ -39,9 +36,17 @@ export function SettingsClient() {
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-4 py-8 md:px-8">
       <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft backdrop-blur md:p-10">
         <h1 className="text-3xl font-semibold tracking-tight text-white mb-2">系统设置</h1>
-        <p className="text-sm text-slate-400 mb-8">
+        <p className="text-sm text-slate-400 mb-6">
           配置您自己的 API Key 与模型端点，配置将保存在本地缓存。请确保各项配置均已填写，系统不再回退使用默认环境变量。
         </p>
+
+        <div className="mb-8 rounded-2xl border border-sky-500/20 bg-sky-500/10 p-5 text-sm text-sky-200">
+          <h3 className="mb-2 font-semibold text-sky-300">如何获取这些参数？</h3>
+          <ul className="list-inside list-disc space-y-1 ml-1 mb-2">
+            <li><strong>ARK_API_KEY</strong>：在「火山引擎 - 火山方舟 - API Key 管理」页面获取。</li>
+            <li><strong>各项 MODEL 接入点 (ep-xxx)</strong>：在「火山引擎 - 火山方舟 - 在线推理 - 预置推理接入点」页面获取。</li>
+          </ul>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <label className="grid gap-2 text-sm text-slate-300 md:col-span-2">
@@ -112,20 +117,6 @@ export function SettingsClient() {
               placeholder="ep-..."
             />
             <p className="text-xs text-slate-500">用于生成分镜脚本的语言模型 Endpoint ID (如 doubao-pro)。</p>
-          </label>
-
-          <label className="grid gap-2 text-sm text-slate-300">
-            <div className="flex justify-between items-center">
-              <span>GEMINI_API_KEY</span>
-            </div>
-            <input
-              type="password"
-              value={geminiApiKey}
-              onChange={(e) => setGeminiApiKey(e.target.value)}
-              className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
-              placeholder="AIza..."
-            />
-            <p className="text-xs text-slate-500">保留配置项。</p>
           </label>
 
           <div className="mt-4 flex items-center gap-4 md:col-span-2">

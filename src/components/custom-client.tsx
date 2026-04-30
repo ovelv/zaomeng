@@ -9,6 +9,7 @@ import { getSettings } from "@/lib/settings";
 export function CustomClient() {
   const [prompt, setPrompt] = useState("");
   const [firstFrameUrl, setFirstFrameUrl] = useState("");
+  const [referenceImageUrl, setReferenceImageUrl] = useState("");
   const [assetId, setAssetId] = useState("");
   const [ratio, setRatio] = useState("9:16");
   const [resolution, setResolution] = useState("720p");
@@ -42,6 +43,7 @@ export function CustomClient() {
 
         if (prompt !== undefined) setPrompt(prompt);
         if (firstFrameUrl !== undefined) setFirstFrameUrl(firstFrameUrl);
+        if (referenceImageUrl !== undefined) setReferenceImageUrl(referenceImageUrl);
         if (assetId !== undefined) setAssetId(assetId);
         if (ratio !== undefined) setRatio(ratio);
         if (resolution !== undefined) setResolution(resolution);
@@ -78,6 +80,7 @@ export function CustomClient() {
       const requestBody = {
         prompt,
         firstFrameUrl,
+        referenceImageUrl,
         assetId,
         ratio,
         resolution,
@@ -140,13 +143,83 @@ export function CustomClient() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-slate-300">
-                  首帧图片 URL (可选)
+                  <div className="flex justify-between items-center">
+                    <span>参考图片 (仅供风格/角色参考)</span>
+                    <label className="cursor-pointer text-xs text-violet-400 hover:text-violet-300 hover:underline">
+                      上传图片
+                      <input 
+                        type="file" 
+                        accept="image/png, image/jpeg, image/jpg, image/webp" 
+                        className="hidden" 
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          if (file.size > 5 * 1024 * 1024) {
+                            alert("图片大小不能超过 5MB");
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const result = event.target?.result as string;
+                            setReferenceImageUrl(result);
+                          };
+                          reader.readAsDataURL(file);
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <input
+                    value={referenceImageUrl}
+                    onChange={(e) => setReferenceImageUrl(e.target.value)}
+                    className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
+                    placeholder="可上传，或输入 https:// / base64..."
+                  />
+                  {referenceImageUrl && referenceImageUrl.startsWith("data:image") && (
+                    <div className="mt-2 aspect-video w-full max-w-[160px] overflow-hidden rounded-xl border border-white/10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={referenceImageUrl} alt="Preview" className="h-full w-full object-cover" />
+                    </div>
+                  )}
+                </label>
+                
+                <label className="grid gap-2 text-sm text-slate-300">
+                  <div className="flex justify-between items-center">
+                    <span>首帧图片 (图生视频)</span>
+                    <label className="cursor-pointer text-xs text-violet-400 hover:text-violet-300 hover:underline">
+                      上传图片
+                      <input 
+                        type="file" 
+                        accept="image/png, image/jpeg, image/jpg, image/webp" 
+                        className="hidden" 
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          if (file.size > 5 * 1024 * 1024) {
+                            alert("图片大小不能超过 5MB");
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const result = event.target?.result as string;
+                            setFirstFrameUrl(result);
+                          };
+                          reader.readAsDataURL(file);
+                        }}
+                      />
+                    </label>
+                  </div>
                   <input
                     value={firstFrameUrl}
                     onChange={(e) => setFirstFrameUrl(e.target.value)}
                     className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition focus:border-violet-400"
-                    placeholder="https://..."
+                    placeholder="可上传，或输入 https:// / base64..."
                   />
+                  {firstFrameUrl && firstFrameUrl.startsWith("data:image") && (
+                    <div className="mt-2 aspect-video w-full max-w-[160px] overflow-hidden rounded-xl border border-white/10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={firstFrameUrl} alt="Preview" className="h-full w-full object-cover" />
+                    </div>
+                  )}
                 </label>
                 <label className="grid gap-2 text-sm text-slate-300">
                   数字人 Asset ID (可选)

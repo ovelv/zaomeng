@@ -18,6 +18,7 @@ export type CreateSeedanceTaskInput = {
   returnLastFrame: boolean;
   assetId?: string;
   firstFrameUrl?: string;
+  referenceImageUrl?: string;
   apiKey: string;
   baseUrl: string;
 };
@@ -99,6 +100,14 @@ export async function createSeedanceTask(input: CreateSeedanceTaskInput) {
       type: "image_url",
       image_url: { url: input.firstFrameUrl },
       role: "first_frame",
+    });
+  }
+  
+  if (input.referenceImageUrl) {
+    content.push({
+      type: "image_url",
+      image_url: { url: input.referenceImageUrl },
+      role: "reference_image",
     });
   } else if (input.assetId) {
     content.push({
